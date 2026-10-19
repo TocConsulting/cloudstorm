@@ -1,0 +1,94 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cloudstorm"
+dynamic = ["version"]
+description = "Distributed load testing across AWS regions"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    {name = "Tarek CHEIKH", email = "tarek@tocconsulting.fr"}
+]
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Testing",
+    "Topic :: System :: Distributed Computing",
+]
+keywords = [
+    "load-testing",
+    "stress-testing",
+    "performance-testing",
+    "aws",
+    "ec2",
+    "distributed",
+    "locust",
+    "jmeter",
+    "k6",
+    "artillery",
+]
+dependencies = [
+    "boto3>=1.28.0",
+    "click>=8.0.0",
+    "rich>=13.0.0",
+    "pyyaml>=6.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/TocConsulting/cloudstorm"
+Repository = "https://github.com/TocConsulting/cloudstorm"
+Issues = "https://github.com/TocConsulting/cloudstorm/issues"
+
+[project.scripts]
+cloudstorm = "cloudstorm.cli:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "mypy>=1.0.0",
+    "ruff>=0.1.0",
+    "boto3-stubs[ec2,ssm,sts]>=1.28.0",
+]
+
+[tool.setuptools.dynamic]
+version = {attr = "cloudstorm.__version__"}
+
+[tool.setuptools]
+packages = ["cloudstorm", "cloudstorm.aws", "cloudstorm.tools", "cloudstorm.tools.locust", "cloudstorm.tools.jmeter", "cloudstorm.tools.artillery", "cloudstorm.tools.k6", "cloudstorm.utils", "cloudstorm.reports"]
+
+[tool.setuptools.package-data]
+"cloudstorm.tools.locust" = ["*.sh"]
+"cloudstorm.tools.jmeter" = ["*.sh"]
+"cloudstorm.tools.artillery" = ["*.sh"]
+"cloudstorm.tools.k6" = ["*.sh"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "C4"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_ignores = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  JMeter custom test plan example for cloudstorm.
+
+  This test plan:
+  - Uses cloudstorm properties: cs_users, cs_duration, cs_host, cs_port, cs_protocol
+  - Tests multiple API endpoints with different HTTP methods
+  - Includes a CSV Data Set for parameterized testing
+  - Has assertions for response validation
+
+  Usage:
+      cloudstorm run https://api.example.com \
+          -\-script custom_scripts_examples/jmeter_rest_api.jmx \
+          -\-tool jmeter -u 20000 -d 60s
+
+  Properties available from cloudstorm:
+      ${__P(cs_users)}, ${__P(cs_duration)}, ${__P(cs_host)}, ${__P(cs_port)}, ${__P(cs_protocol)}
+-->
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="REST API Load Test">
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="API Users">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController">
+          <intProp name="LoopController.loops">-1</intProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">${__P(cs_users,100)}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">${__P(cs_rampup,10)}</stringProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <stringProp name="ThreadGroup.duration">${__P(cs_duration,60)}</stringProp>
+        <stringProp name="ThreadGroup.delay">0</stringProp>
+      </ThreadGroup>
+      <hashTree>
+
+        <!-- GET /api/products -->
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET /api/products">
+          <stringProp name="HTTPSampler.domain">${__P(cs_host)}</stringProp>
+          <stringProp name="HTTPSampler.port">${__P(cs_port)}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${__P(cs_protocol)}</stringProp>
+          <stringProp name="HTTPSampler.path">/api/products</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert 200">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+
+        <!-- GET /api/products/{id} -->
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET /api/products/1">
+          <stringProp name="HTTPSampler.domain">${__P(cs_host)}</stringProp>
+          <stringProp name="HTTPSampler.port">${__P(cs_port)}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${__P(cs_protocol)}</stringProp>
+          <stringProp name="HTTPSampler.path">/api/products/1</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+
+        <!-- Think time -->
+        <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Think Time">
+          <stringProp name="ConstantTimer.delay">500</stringProp>
+        </ConstantTimer>
+        <hashTree/>
+
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

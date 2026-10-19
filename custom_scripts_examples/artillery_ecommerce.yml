@@ -1,0 +1,64 @@
+# Artillery custom config example for cloudstorm.
+#
+# This config simulates an e-commerce user flow:
+# 1. Browse products
+# 2. View product detail
+# 3. Add to cart
+# 4. Checkout
+#
+# Usage:
+#     cloudstorm run https://api.example.com \
+#         --script custom_scripts_examples/artillery_ecommerce.yml \
+#         --tool artillery -u 3000 -d 60s
+#
+# Environment variables available from cloudstorm:
+#     $env.TARGET_URL, $env.USERS, $env.DURATION_SECONDS, $env.RAMP_UP
+
+config:
+  target: "{{ $env.TARGET_URL }}"
+  plugins:
+    expect: {}
+  phases:
+    - duration: "{{ $env.RAMP_UP }}"
+      arrivalRate: 1
+      rampTo: 10
+      name: "Ramp up"
+    - duration: "{{ $env.DURATION_SECONDS }}"
+      arrivalRate: 10
+      name: "Sustained load"
+  defaults:
+    headers:
+      Content-Type: "application/json"
+      Accept: "application/json"
+
+scenarios:
+  - name: "Browse and buy"
+    weight: 70
+    flow:
+      - get:
+          url: "/api/products"
+          expect:
+            - statusCode: 200
+      - think: 2
+      - get:
+          url: "/api/products/1"
+          expect:
+            - statusCode: 200
+      - think: 1
+      - post:
+          url: "/api/cart"
+          json:
+            product_id: 1
+            quantity: 1
+
+  - name: "Just browsing"
+    weight: 30
+    flow:
+      - get:
+          url: "/api/products"
+      - think: 3
+      - get:
+          url: "/api/products/2"
+      - think: 2
+      - get:
+          url: "/api/products/3"

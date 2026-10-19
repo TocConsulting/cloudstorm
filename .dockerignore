@@ -1,0 +1,14 @@
+.git
+.gitignore
+.dockerignore
+Dockerfile
+**/__pycache__
+*.egg-info
+build
+dist
+.venv
+.env
+tests
+assets
+custom_scripts_examples
+results
