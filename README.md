@@ -114,10 +114,10 @@ Each test used 100,000 users for 2 minutes, spread over 4 regions, against three
 
 ## Custom scripts
 
-`--script` runs your own script instead of the default GET requests. One example per tool is in `custom_scripts_examples/`.
+`--script` runs your own script instead of the default GET requests. One example per tool is in the [custom_scripts_examples](https://github.com/TocConsulting/cloudstorm/tree/main/custom_scripts_examples) folder of the repository.
 
 ```bash
-cloudstorm run https://example.com --tool k6 --script custom_scripts_examples/k6_api_with_checks.js -u 5000 -d 60s
+cloudstorm run https://example.com --tool k6 --script ./k6_api_with_checks.js -u 5000 -d 60s
 ```
 
 The script receives the environment variables `TARGET_URL`, `USERS`, `DURATION`, `SPAWN_RATE` and `ENDPOINTS`. A script file can be at most 48,000 bytes, and `cloudstorm run` refuses larger files. The script is base64-encoded and sent inside an AWS SSM command, which AWS limits to 97 KB in total (parameters and document). Measured on AWS, the largest script accepted was about 65,700 bytes with JMeter, the tool with the biggest run script, so 48,000 bytes keeps a safety margin for every tool.
