@@ -9,6 +9,16 @@
 </p>
 
 <p align="center">
+  <a href="https://pypi.org/project/cloudstorm/"><img src="https://img.shields.io/pypi/v/cloudstorm.svg" alt="PyPI version"></a>
+  <a href="https://pepy.tech/project/cloudstorm"><img src="https://static.pepy.tech/badge/cloudstorm" alt="Downloads"></a>
+  <a href="https://hub.docker.com/r/tarekcheikh/cloudstorm"><img src="https://img.shields.io/docker/v/tarekcheikh/cloudstorm?label=docker" alt="Docker"></a>
+  <a href="https://hub.docker.com/r/tarekcheikh/cloudstorm"><img src="https://img.shields.io/docker/pulls/tarekcheikh/cloudstorm" alt="Docker Pulls"></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-brightgreen.svg" alt="License: MIT"></a>
+  <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.10+-blue.svg" alt="Python 3.10+"></a>
+  <a href="https://aws.amazon.com/"><img src="https://img.shields.io/badge/AWS-Multi--Region-orange.svg" alt="AWS Multi-Region"></a>
+</p>
+
+<p align="center">
   <img src="https://raw.githubusercontent.com/TocConsulting/cloudstorm/main/assets/cloudstorm-in-action.png" alt="cloudstorm runs a load test from us-east-1, eu-west-3 and ap-northeast-1 against example.com and reports requests, p95 and errors" width="820">
 </p>
 
