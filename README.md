@@ -14,7 +14,7 @@
   <a href="https://hub.docker.com/r/tarekcheikh/cloudstorm"><img src="https://img.shields.io/docker/v/tarekcheikh/cloudstorm?label=docker" alt="Docker"></a>
   <a href="https://hub.docker.com/r/tarekcheikh/cloudstorm"><img src="https://img.shields.io/docker/pulls/tarekcheikh/cloudstorm" alt="Docker Pulls"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-brightgreen.svg" alt="License: MIT"></a>
-  <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.10+-blue.svg" alt="Python 3.10+"></a>
+  <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.11+-blue.svg" alt="Python 3.11+"></a>
   <a href="https://aws.amazon.com/"><img src="https://img.shields.io/badge/AWS-Multi--Region-orange.svg" alt="AWS Multi-Region"></a>
 </p>
 
@@ -30,7 +30,7 @@ Only test systems you own or have written authorization to test. Load testing ca
 
 ## Install
 
-Python 3.10 or newer:
+Python 3.11 or newer:
 
 ```bash
 pip install cloudstorm
